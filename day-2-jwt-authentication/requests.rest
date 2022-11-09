@@ -1,0 +1,31 @@
+### GET THE ACCESS AND REFRESH TOKENS
+
+POST http://localhost:4000/login 
+Content-Type: application/json
+
+{
+"username": "Meredith"
+}
+
+### PUT THE ACCESS TOKEN; 
+GET http://localhost:3000/posts 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWVyZWRpdGgiLCJpYXQiOjE2Njc5MDY5MjMsImV4cCI6MTY2NzkwNjk1M30.iiTLdIg-LmNrGcZ-hP9TP5P1-UsErybkWeD3Jn1aNig
+
+
+### PUT THE REFRESH TOKEN
+POST http://localhost:4000/token 
+Content-Type: application/json
+
+{
+"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWVyZWRpdGgiLCJpYXQiOjE2Njc5MDY4NzB9.OVQBDmpEmA3UZMYDuLUic1JiE-5gNvwLSM3VFePaO68"
+}
+### PUT THE REFRESH TOKEN
+
+DELETE http://localhost:4000/logout
+Content-Type: application/json
+
+{
+"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWVyZWRpdGgiLCJpYXQiOjE2Njc5MDY4NzB9.OVQBDmpEmA3UZMYDuLUic1JiE-5gNvwLSM3VFePaO68"
+}
+
+
