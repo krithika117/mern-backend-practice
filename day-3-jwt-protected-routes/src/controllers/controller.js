@@ -19,7 +19,7 @@ const userSignup = async (req, res) => {
             username:username
         });
         const token = jwt.sign({email:result.email, id: result._id}, "NOTESAPI")
-        res.status(201).json({user: result, token: token});
+        res.status(201).json({message:"User signed up"});
     }
     catch (err) {
         console.log(err);
@@ -44,7 +44,7 @@ const userSignin = async (req, res) => {
         }
 
         const token = jwt.sign({email:existingUser.email, id: existingUser._id},"NOTESAPI")
-        res.status(201).json({user: existingUser, token: token});
+        res.status(201).json({message:"User logged in"});
     }
     catch (err) {
         console.log(err);
@@ -56,10 +56,9 @@ const userSignin = async (req, res) => {
 
 const adminSignin = async (req, res) => {
     const { email, password, username } = req.body;
-
     try{
         const existingUser = await userModel.findOne({ email:email })
-        if(existingUser && !(username==="admin") && !(email==="admin@gmail.com") && !(bcrypt.compare(password, existingUser.password))){
+        if(existingUser && ((username!="admin") || (email!="admin@gmail.com") || !(bcrypt.compare(password, existingUser.password)))){
             return res.status(400).json({message:"No permissions"})
         }
         if(!existingUser){
@@ -71,13 +70,11 @@ const adminSignin = async (req, res) => {
         }
 
         const token = jwt.sign({email:existingUser.email, id: existingUser._id},"NOTESAPI")
-        res.status(201).json({user: existingUser, token: token});
+        res.status(201).json({message:"Admin logged in"});
     }
     catch (err) {
         console.log(err);
         res.status(500).json({message: "Something went wrong"})
     }
 }
-
-
 module.exports = { userSignup, userSignin, adminSignin }
