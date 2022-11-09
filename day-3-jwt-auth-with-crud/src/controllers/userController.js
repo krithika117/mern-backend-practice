@@ -1,7 +1,9 @@
+const dotenv = require('dotenv')
+dotenv.config()
 const userModel = require('../models/User')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
-const SECRET_KEY = "NOTESAPI"
+
 
 const signup = async (req, res) => {
     const { username, email, password } = req.body;
@@ -16,7 +18,7 @@ const signup = async (req, res) => {
             password:hashedPassword,
             username:username
         });
-        const token = jwt.sign({email:result.email, id: result._id}, SECRET_KEY)
+        const token = jwt.sign({email:result.email, id: result._id}, process.env.SECRET_KEY)
         res.status(201).json({user: result, token: token});
     }
     catch (err) {
@@ -38,7 +40,7 @@ const signin = async (req, res) => {
             return res.status(400).json({message:"Invalid Creds"})
         }
 
-        const token = jwt.sign({email:existingUser.email, id: existingUser._id}, SECRET_KEY)
+        const token = jwt.sign({email:existingUser.email, id: existingUser._id},process.env.SECRET_KEY)
         res.status(201).json({user: existingUser, token: token});
     }
     catch (err) {
